@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ панель | WaterCloud</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/img/logo.png">
+            <a href="/"><h1>Water<span class="cloud-colored">Cloud</span></h1></a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="/storage.html">Хранилище</a>
+            <a href="/subscription.html">Подписка</a>
+            <a href="/login.html">Войти</a>
+            <a href="/logout">Выйти</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="users">
+            <a class="user-link" href="/user/someuserid.html">Username</a>
+            <a class="user-link" href="/user/someuserid.html">Username</a>
+            <a class="user-link" href="/user/someuserid.html">Username</a>
+            <a class="user-link" href="/user/someuserid.html">Username</a>
+        </div>
+
+        <h2 style="margin: 1rem">Upload</h2>
+        
+        <form class="upload-form">
+            <input type="file" class="file-upload">
+            <button type="submit">Загрузить</button>
+        </form>
+
+        <button class="final-upload">Опубликовать</button>
+    </main>
+
+    <script>
+        let form = document.querySelector('.upload-form');
+        const input = document.querySelector('.file-upload');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+
+            formData.append('resource.zip', input.files[0]);
+            
+            let loc = window.location;
+
+            fetch(`${loc.protocol}//${loc.hostname}:${loc.port}/api/upload`, { method: 'post', headers: { 'Content-Type': 'multipart/form-data'}, body: formData }).catch(console.error);
+        });
+
+        let final = document.querySelector('.final-upload');
+        final.addEventListener('click', () => {
+            let loc = window.location;
+            fetch(`${loc.protocol}//${loc.hostname}:${loc.port}/api/upload-end`, { method: 'post', headers: { 'Content-Type': 'multipart/form-data'}, body: new FormData() }).catch(console.error);
+        });
+    </script>
+</body>
+</html>

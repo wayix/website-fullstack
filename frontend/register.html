@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зарегистрироваться | WaterCloud</title>
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/img/logo.png">
+            <a href="/"><h1>Water<span class="cloud-colored">Cloud</span></h1></a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="/storage.html">Хранилище</a>
+            <a href="/subscription.html">Подписка</a>
+            <a href="/login.html">Войти</a>
+            <a href="/logout">Выйти</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="register-form">
+            <div class="title-container">
+                <h2 class="title">Зарегистрироваться</h2>
+            </div>
+
+            <form>
+                <input class="input input-email" type="text" name="login" placeholder="Email">
+                <input class="input input-login" type="text" name="login" placeholder="Логин">
+                <input class="input input-password" type="password" name="password" placeholder="Пароль">
+                <input class="submit-button" type="submit" name="submit-button" value="Зарегистрироваться">
+            </form>
+
+            <a class="switch-to-login" href="/login.html">Уже есть аккаунт</a>
+        </div>
+    </main>
+
+    <script>
+        document.querySelector('.submit-button').addEventListener('click', (e) => {
+            e.preventDefault();
+
+            let email = document.querySelector('.input-email').value;
+            let login = document.querySelector('.input-login').value;
+            let password = document.querySelector('.input-password').value;
+
+            let loc = window.location;
+
+            fetch(`${loc.protocol}//${loc.hostname}:${loc.port}/api/auth/register`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    login: login,
+                    password: password
+                })
+            }).catch(console.error);
+        });
+    </script>
+</body>
+</html>
